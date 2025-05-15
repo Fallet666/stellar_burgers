@@ -10,22 +10,22 @@ import {
 } from '../../services/slices/FeedDataSlice';
 
 export const Feed: FC = () => {
-  const loading = useSelector(getLoading);
   const dispatch = useDispatch();
-  const orders: TOrder[] = useSelector(getFeedOrders);
+  const loading = useSelector(getLoading);
 
   useEffect(() => {
     dispatch(getFeedData()).then((result) => {});
   }, [dispatch]);
 
+  const orders: TOrder[] = useSelector(getFeedOrders);
+
   if (!orders.length || loading) {
     return <Preloader />;
   }
 
-  <FeedUI
-    orders={orders}
-    handleGetFeeds={() => {
-      dispatch(getFeedData());
-    }}
-  />;
+  const handleGetAllOrders = () => {
+    dispatch(getFeedData());
+  };
+
+  return <FeedUI orders={orders} handleGetFeeds={handleGetAllOrders} />;
 };

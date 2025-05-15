@@ -4,11 +4,11 @@ import { useSelector } from '../../services/store';
 import { selectUser } from '../../services/slices/UserInfoSlice';
 
 export const AppHeader: FC = () => {
-    const userName = useSelector(selectUser);
+  const userName = useSelector(selectUser);
 
-    return (
-        <>
-            <AppHeaderUI userName={userName?.name} />;
-        </>
-    );
+  return (
+    <>
+      <AppHeaderUI userName={userName?.name} />
+    </>
+  );
 };

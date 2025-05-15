@@ -1,7 +1,10 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useDispatch, useSelector } from '../../services/store';
-import { logInUser, selectIsAuthenticated } from '../../services/slices/UserInfoSlice';
+import {
+  logInUser,
+  selectIsAuthenticated
+} from '../../services/slices/UserInfoSlice';
 import { Navigate } from 'react-router-dom';
 
 export const Login: FC = () => {
@@ -17,7 +20,7 @@ export const Login: FC = () => {
     const userLoginData = {
       email: email,
       password: password
-    }
+    };
     dispatch(logInUser(userLoginData));
   };
 
