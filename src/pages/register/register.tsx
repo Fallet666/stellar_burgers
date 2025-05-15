@@ -1,7 +1,10 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 import { useDispatch, useSelector } from '../../services/store';
-import { selectloginUserRequest, toRegisterUser } from '../../services/slices/UserInfoSlice';
+import {
+  selectloginUserRequest,
+  toRegisterUser
+} from '../../services/slices/UserInfoSlice';
 import { TRegisterData } from '@api';
 import { Preloader } from '@ui';
 
@@ -23,7 +26,7 @@ export const Register: FC = () => {
     dispatch(toRegisterUser(newUserData));
   };
 
-  if(loading) {
+  if (loading) {
     return <Preloader />;
   }
 
