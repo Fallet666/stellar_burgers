@@ -1,7 +1,6 @@
 import { getOrdersApi } from "@api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TOrder } from "@utils-types";
-import { getLoading } from "./FeedDataSlice";
 
 
 export type TOrderHistoryState = {

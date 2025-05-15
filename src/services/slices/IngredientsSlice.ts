@@ -44,8 +44,8 @@ export const ingredientsSlice = createSlice({
             })
     },
     selectors: {
-        getIngredientsSelector: (state) => {state.ingredients},
-        getLoadingStatus: (state) => {state.loading}
+        getIngredientsSelector: (state) => state.ingredients,
+        getLoadingStatus: (state) => state.loading
     }
 });
 
