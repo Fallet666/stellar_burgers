@@ -17,10 +17,8 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
 
 export const FeedInfo: FC = () => {
   const orders: TOrder[] = useSelector(getFeedOrders);
-  const feed = {
-    total: useSelector(getTotalEmountOrders),
-    totalToday: useSelector(getTotalEmountToday)
-  };
+  const totalAmount = useSelector(getTotalEmountOrders);
+  const totalAmountToday = useSelector(getTotalEmountToday);
 
   const readyOrders = getOrders(orders, 'done');
 
@@ -30,7 +28,7 @@ export const FeedInfo: FC = () => {
     <FeedInfoUI
       readyOrders={readyOrders}
       pendingOrders={pendingOrders}
-      feed={feed}
+      feed={{ total: totalAmount, totalToday: totalAmountToday }}
     />
   );
 };

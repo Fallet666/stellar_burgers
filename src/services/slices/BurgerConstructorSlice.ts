@@ -59,7 +59,9 @@ export const burgerConstructorSlice = createSlice({
       action: PayloadAction<TConstructorIngredient>
     ) => {
       state.constructorItems.ingredients =
-        state.constructorItems.ingredients.filter((item) => item.id !== action.payload.id);
+        state.constructorItems.ingredients.filter(
+          (item) => item.id !== action.payload.id
+        );
     },
     moveUpIngredient: (state, action: PayloadAction<number>) => {
       const index = action.payload;

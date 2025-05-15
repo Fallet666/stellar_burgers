@@ -26,7 +26,7 @@ export const BurgerConstructor: FC = () => {
     if (!authorized) {
       return navigate('/login');
     }
-    if (!constructorItems.bun || orderRequest) return;
+    if (!constructorItems.bun || orderRequest) return null;
 
     const order = [
       constructorItems.bun?._id,
