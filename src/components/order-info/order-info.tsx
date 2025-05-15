@@ -22,9 +22,8 @@ export const selectOrderById = (number: number) => (state: RootState) => {
 };
 
 export const OrderInfo: FC = () => {
-
   const { number } = useParams();
-  
+
   const orderData = useSelector(selectOrderById(Number(number)));
 
   const ingredients: TIngredient[] = useSelector(getIngredientsSelector);

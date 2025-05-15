@@ -1,105 +1,115 @@
-import { orderBurgerApi } from "@api";
-import { createAsyncThunk, createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
-import { TConstructorIngredient, TIngredient, TOrder } from "@utils-types";
-
+import { orderBurgerApi } from '@api';
+import {
+  createAsyncThunk,
+  createSlice,
+  nanoid,
+  PayloadAction
+} from '@reduxjs/toolkit';
+import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 
 export type TBurgerConstructorState = {
-    loading: boolean;
-    error: null | string;
-    constructorItems: {
-        bun: TIngredient | null;
-        ingredients: Array<TConstructorIngredient>;
-    }
-    orderRequest: boolean;
-    orderModalData: TOrder | null;
+  loading: boolean;
+  error: null | string;
+  constructorItems: {
+    bun: TIngredient | null;
+    ingredients: Array<TConstructorIngredient>;
+  };
+  orderRequest: boolean;
+  orderModalData: TOrder | null;
 };
 
 const initialState: TBurgerConstructorState = {
-    loading: false,
-    error: null,
-    constructorItems: {
-        bun: null,
-        ingredients: []
-    },
-    orderRequest: false,
-    orderModalData: null
+  loading: false,
+  error: null,
+  constructorItems: {
+    bun: null,
+    ingredients: []
+  },
+  orderRequest: false,
+  orderModalData: null
 };
 
 export const createOrder = createAsyncThunk(
-    'order/createOrder',
-    async (data: string[]) => {
-        const respons = await orderBurgerApi(data);
-        return respons;
-    }
+  'order/createOrder',
+  async (data: string[]) => {
+    const respons = await orderBurgerApi(data);
+    return respons;
+  }
 );
 
 export const burgerConstructorSlice = createSlice({
-    name: 'burgerConstructor',
-    initialState,
-    reducers: {
-        addIngredient: {
-            reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
-                if (action.payload.type === 'bun') {
-                    state.constructorItems.bun = action.payload;
-                } else {
-                    state.constructorItems.ingredients.push(action.payload);
-                }
-            },
-            prepare: (ingredient: TIngredient) => {
-                const key = nanoid();
-                return { payload: { ...ingredient, id: key } };
-            }
-        },
-        removeIngredient: (state, action: PayloadAction<TConstructorIngredient>) => {
-            state.constructorItems.ingredients = state.constructorItems.ingredients.filter((item) => { item._id !== action.payload._id });
-        },
-        moveUpIngredient: (state, action: PayloadAction<number>) => {
-            const index = action.payload;
-            if (index > 0) {
-                const ingredients = state.constructorItems.ingredients;
-                [ingredients[index - 1], ingredients[index]] = [
-                    ingredients[index],
-                    ingredients[index - 1]
-                ];
-            }
-        },
-        moveDownIngredient: (state, action: PayloadAction<number>) => {
-            const index = action.payload;
-            if (index < state.constructorItems.ingredients.length - 1) {
-                const ingredients = state.constructorItems.ingredients;
-                [ingredients[index + 1], ingredients[index]] = [
-                    ingredients[index],
-                    ingredients[index + 1]
-                ];
-            }
-        },
-        clearOrder: (state) => initialState
+  name: 'burgerConstructor',
+  initialState,
+  reducers: {
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        if (action.payload.type === 'bun') {
+          state.constructorItems.bun = action.payload;
+        } else {
+          state.constructorItems.ingredients.push(action.payload);
+        }
+      },
+      prepare: (ingredient: TIngredient) => {
+        const key = nanoid();
+        return { payload: { ...ingredient, id: key } };
+      }
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(createOrder.pending, (state) => {
-                state.orderRequest = true;
-                state.error = null;
-            })
-            .addCase(createOrder.rejected, (state, action) => {
-                state.orderRequest = false;
-                state.error = action.error.message || 'error burger constructor';
-            })
-            .addCase(createOrder.fulfilled, (state, action) => {
-                state.orderRequest = false;
-                state.orderModalData = action.payload.order;
-                state.constructorItems.bun = null;
-                state.constructorItems.ingredients = [];
-                state.error = null;
-            });
+    removeIngredient: (
+      state,
+      action: PayloadAction<TConstructorIngredient>
+    ) => {
+      state.constructorItems.ingredients =
+        state.constructorItems.ingredients.filter((item) => {
+          item._id !== action.payload._id;
+        });
     },
-    selectors: {
-        getLoading: (state) => state.loading,
-        getError: (state) => state.error,
-        getOrderRequest: (state) => state.orderRequest,
-        getOrderModalData: (state) => state.orderModalData,
-        getConstructorItems: (state) => state.constructorItems
-    }
+    moveUpIngredient: (state, action: PayloadAction<number>) => {
+      const index = action.payload;
+      if (index > 0) {
+        const ingredients = state.constructorItems.ingredients;
+        [ingredients[index - 1], ingredients[index]] = [
+          ingredients[index],
+          ingredients[index - 1]
+        ];
+      }
+    },
+    moveDownIngredient: (state, action: PayloadAction<number>) => {
+      const index = action.payload;
+      if (index < state.constructorItems.ingredients.length - 1) {
+        const ingredients = state.constructorItems.ingredients;
+        [ingredients[index + 1], ingredients[index]] = [
+          ingredients[index],
+          ingredients[index + 1]
+        ];
+      }
+    },
+    clearOrder: (state) => initialState
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createOrder.pending, (state) => {
+        state.orderRequest = true;
+        state.error = null;
+      })
+      .addCase(createOrder.rejected, (state, action) => {
+        state.orderRequest = false;
+        state.error = action.error.message || 'error burger constructor';
+      })
+      .addCase(createOrder.fulfilled, (state, action) => {
+        state.orderRequest = false;
+        state.orderModalData = action.payload.order;
+        state.constructorItems.bun = null;
+        state.constructorItems.ingredients = [];
+        state.error = null;
+      });
+  },
+  selectors: {
+    getLoading: (state) => state.loading,
+    getError: (state) => state.error,
+    getOrderRequest: (state) => state.orderRequest,
+    getOrderModalData: (state) => state.orderModalData,
+    getConstructorItems: (state) => state.constructorItems
+  }
 });
 
 export default burgerConstructorSlice;

@@ -2,7 +2,11 @@ import { ProfileUI } from '@ui-pages';
 import { TUser } from '@utils-types';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectloginUserRequest, selectUser, updateUser } from '../../services/slices/UserInfoSlice';
+import {
+  selectloginUserRequest,
+  selectUser,
+  updateUser
+} from '../../services/slices/UserInfoSlice';
 import { Preloader } from '@ui';
 import { useDispatch } from '../../services/store';
 
@@ -70,5 +74,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
 };

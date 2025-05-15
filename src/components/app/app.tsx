@@ -33,7 +33,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    dispatch(getIngredients())
+    dispatch(getIngredients());
   }, [dispatch]);
 
   useEffect(() => {
