@@ -8,7 +8,7 @@ export type TBurgerConstructorState = {
     error: null | string;
     constructorItems: {
         bun: TIngredient | null;
-        ingredients: Array<TIngredient>;
+        ingredients: Array<TConstructorIngredient>;
     }
     orderRequest: boolean;
     orderModalData: TOrder | null;
