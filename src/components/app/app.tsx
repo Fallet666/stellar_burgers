@@ -16,9 +16,9 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
-import { checkUserAuth } from '../../services/slices/UserInfoSlice';
-import { ProtectedRoute } from '../protected-route';
+import { checkUserAuth } from '../../services/slices/UserSlice';
 import { getIngredients } from '../../services/slices/IngredientsSlice';
+import { ProtectedRoute } from '../ProtectedRoute';
 
 const App = () => {
   const navigate = useNavigate();
@@ -33,11 +33,11 @@ const App = () => {
   };
 
   useEffect(() => {
-    dispatch(getIngredients());
+    dispatch(checkUserAuth());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(checkUserAuth());
+    dispatch(getIngredients());
   }, [dispatch]);
 
   return (
@@ -75,7 +75,7 @@ const App = () => {
         <Route
           path='reset-password'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <ResetPassword />
             </ProtectedRoute>
           }

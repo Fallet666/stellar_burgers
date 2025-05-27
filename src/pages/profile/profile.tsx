@@ -3,16 +3,16 @@ import { TUser } from '@utils-types';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  selectloginUserRequest,
+  selectLoginUserRequest,
   selectUser,
   updateUser
-} from '../../services/slices/UserInfoSlice';
+} from '../../services/slices/UserSlice';
 import { Preloader } from '@ui';
 import { useDispatch } from '../../services/store';
 
 export const Profile: FC = () => {
   const user = useSelector(selectUser) as TUser;
-  const loading = useSelector(selectloginUserRequest);
+  const loading = useSelector(selectLoginUserRequest);
   const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({

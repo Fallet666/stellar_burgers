@@ -1,10 +1,11 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
+
 import { useDispatch, useSelector } from '../../services/store';
 import {
-  selectloginUserRequest,
+  selectLoginUserRequest,
   toRegisterUser
-} from '../../services/slices/UserInfoSlice';
+} from '../../services/slices/UserSlice';
 import { TRegisterData } from '@api';
 import { Preloader } from '@ui';
 
@@ -14,10 +15,11 @@ export const Register: FC = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const loading = useSelector(selectloginUserRequest);
+  const loading = useSelector(selectLoginUserRequest);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+
     const newUserData: TRegisterData = {
       name: userName,
       email: email,

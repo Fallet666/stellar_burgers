@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from '../../services/store';
 import {
   logInUser,
   selectIsAuthenticated
-} from '../../services/slices/UserInfoSlice';
+} from '../../services/slices/UserSlice';
 import { Navigate } from 'react-router-dom';
 
 export const Login: FC = () => {

@@ -1,14 +1,11 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { RootState, useDispatch, useSelector } from '../../services/store';
+
+import { RootState, useSelector } from '../../services/store';
 import { getIngredientsSelector } from '../../services/slices/IngredientsSlice';
 import { useParams } from 'react-router-dom';
-import {
-  getFeedOrders,
-  getOrderByNumber
-} from '../../services/slices/FeedDataSlice';
 
 export const selectOrderById = (number: number) => (state: RootState) => {
   if (state.feed.orders.length || state.orderHistory.orders.length) {
@@ -27,21 +24,11 @@ export const selectOrderById = (number: number) => (state: RootState) => {
 
 export const OrderInfo: FC = () => {
   const { number } = useParams();
-  const dispatch = useDispatch();
-  const orders = useSelector(getFeedOrders);
-
   const orderData = useSelector(selectOrderById(Number(number)));
-
   const ingredients: TIngredient[] = useSelector(getIngredientsSelector);
 
-  useEffect(() => {
-    if (!orderData) {
-      dispatch(getOrderByNumber(Number(number)));
-    }
-  }, [dispatch]);
-
   const orderInfo = useMemo(() => {
-    if (!orderData || !ingredients.length) return;
+    if (!orderData || !ingredients.length) return null;
 
     const date = new Date(orderData.createdAt);
 

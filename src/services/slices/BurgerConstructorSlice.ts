@@ -11,7 +11,7 @@ export type TBurgerConstructorState = {
   loading: boolean;
   error: null | string;
   constructorItems: {
-    bun: TIngredient | null;
+    bun: TConstructorIngredient | null;
     ingredients: Array<TConstructorIngredient>;
   };
   orderRequest: boolean;
@@ -32,8 +32,8 @@ const initialState: TBurgerConstructorState = {
 export const createOrder = createAsyncThunk(
   'order/createOrder',
   async (data: string[]) => {
-    const respons = await orderBurgerApi(data);
-    return respons;
+    const response = await orderBurgerApi(data);
+    return response;
   }
 );
 

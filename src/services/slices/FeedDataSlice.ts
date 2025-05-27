@@ -26,8 +26,8 @@ export const getOrderByNumber = createAsyncThunk(
   'feed/getOrder',
   async (number: number, { rejectWithValue }) => {
     try {
-      const respons = await getOrderByNumberApi(number);
-      return respons;
+      const response = await getOrderByNumberApi(number);
+      return response;
     } catch {
       return rejectWithValue('Error feed data');
     }
@@ -69,8 +69,8 @@ export const feedDataSlice = createSlice({
   },
   selectors: {
     getFeedOrders: (state) => state.orders,
-    getTotalEmountOrders: (state) => state.total,
-    getTotalEmountToday: (state) => state.totalToday,
+    getTotalAmountOrders: (state) => state.total,
+    getTotalAmountToday: (state) => state.totalToday,
     getLoading: (state) => state.loading,
     getError: (state) => state.error,
     selectModalOrder: (state) => state.modalOrder
@@ -80,8 +80,8 @@ export const feedDataSlice = createSlice({
 export default feedDataSlice;
 export const {
   getFeedOrders,
-  getTotalEmountOrders,
-  getTotalEmountToday,
+  getTotalAmountOrders,
+  getTotalAmountToday,
   getLoading,
   getError
 } = feedDataSlice.selectors;
