@@ -1,17 +1,22 @@
 import { rootReducer } from './store';
-import userReducer, { initialState as userInitialState } from './slices/user';
-import feedReducer, { initialState as feedInitialState } from './slices/feed';
-import burgerConstructorReducer, { initialState as burgerConstructorInitialState } from './slices/burgerConstructor';
-import orderHistoryReducer, { initialState as orderHistoryInitialState } from './slices/orderHistory';
+// Импортируем slice-объекты (по умолчанию) и берём их .reducer для вычисления initialState
+import userSlice from './slices/UserSlice';
+import feedSlice from './slices/FeedDataSlice';
+import ingredientsSlice from './slices/IngredientsSlice';
+import burgerConstructorSlice from './slices/BurgerConstructorSlice';
+import orderHistorySlice from './slices/UserOrdersSlice';
 
 describe('Проверка инициализации rootReducer', () => {
     it('должен корректно инициализировать начальный state', () => {
+        const expectedState = {
+            userState: userSlice.reducer(undefined, { type: '@@INIT' }),
+            feed: feedSlice.reducer(undefined, { type: '@@INIT' }),
+            ingredients: ingredientsSlice.reducer(undefined, { type: '@@INIT' }),
+            burgerConstructor: burgerConstructorSlice.reducer(undefined, { type: '@@INIT' }),
+            orderHistory: orderHistorySlice.reducer(undefined, { type: '@@INIT' }),
+        };
+
         const state = rootReducer(undefined, { type: '@@INIT' });
-        expect(state).toEqual({
-            userState: userInitialState,
-            feed: feedInitialState,
-            burgerConstructor: burgerConstructorInitialState,
-            orderHistory: orderHistoryInitialState,
-        });
+        expect(state).toEqual(expectedState);
     });
 });
